@@ -57,7 +57,7 @@
 
 <div class="site-header">
   <div class="site-header-inner">
-    <div class="logo">Tax<span>Calc</span> <span style="font-size:13px; opacity:.7; font-weight:400;">FY 2024-25 (AY 2025-26)</span></div>
+    <div class="logo">Tax<span>Calc</span> <span id="header-fy" style="font-size:13px; opacity:.7; font-weight:400;">FY 2024-25 (AY 2025-26)</span></div>
     <nav class="header-nav">
       <a href="index.html" class="active">📊 Income Tax</a>
       <a href="hra/">🏠 HRA Calculator</a>
@@ -67,7 +67,13 @@
 </div>
 
 <div class="container">
-  <h1 style="font-size:20px; font-weight:800; margin:16px 0 4px;">Income Tax Calculator — FY 2024-25</h1>
+  <div style="display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:10px; margin:16px 0 4px;">
+    <h1 id="page-h1" style="font-size:20px; font-weight:800; margin:0;">Income Tax Calculator — FY 2024-25</h1>
+    <select id="fy-select" onchange="onYearChange()" style="padding:6px 10px; border-radius:8px; border:1.5px solid #c7d2fe; background:#eef2ff; color:#4338ca; font-size:13px; font-weight:700; cursor:pointer;">
+      <option value="2425">FY 2024-25 (AY 2025-26)</option>
+      <option value="2526">FY 2025-26 (AY 2026-27)</option>
+    </select>
+  </div>
   <p style="font-size:13px; color:#92400e; margin-bottom:20px;">New regime vs old regime comparison — enter your salary and deductions to see which saves more tax</p>
 
   <div class="two-col">
@@ -86,6 +92,11 @@
             <option value="60to80">60–80 years (Senior Citizen)</option>
             <option value="above80">Above 80 years (Super Senior)</option>
           </select>
+        </div>
+        <div class="field">
+          <label>Employer NPS Contribution — 80CCD(2) <span style="font-size:11px; color:#4338ca;">(allowed in both regimes)</span></label>
+          <div class="input-prefix"><span>₹</span><input type="number" id="employer-nps" value="0" min="0" step="5000" oninput="calculate()" placeholder="0"></div>
+          <div style="font-size:11px; color:#92400e; margin-top:3px;">Up to 10% of basic salary — fully tax-free under Section 80CCD(2)</div>
         </div>
       </div>
 
@@ -121,7 +132,7 @@
           <div class="regime-label">New Regime</div>
           <div class="regime-tax" id="new-tax">₹0</div>
           <div class="regime-sub" id="new-sub">Taxable: ₹0</div>
-          <div style="font-size:11px; color:#4338ca; margin-top:6px;">Std. deduction: ₹75,000</div>
+          <div id="new-regime-note" style="font-size:11px; color:#4338ca; margin-top:6px;">Std. deduction: ₹75,000</div>
         </div>
         <div class="regime-card old-regime" id="card-old">
           <div class="regime-label">Old Regime</div>
@@ -166,13 +177,13 @@
 
   <!-- TAX SLABS REFERENCE -->
   <div class="card" style="margin-top:20px;">
-    <div class="card-title">FY 2024-25 Tax Slabs Reference</div>
+    <div class="card-title" id="slab-ref-title">FY 2024-25 Tax Slabs Reference</div>
     <div class="slab-wrap">
       <div>
         <div style="font-size:12px; font-weight:800; color:#4338ca; margin-bottom:6px;">NEW REGIME</div>
-        <table class="slab-table new">
+        <table class="slab-table new" id="new-slab-table">
           <thead><tr><th>Income Range</th><th>Rate</th></tr></thead>
-          <tbody>
+          <tbody id="new-slab-body">
             <tr><td>Up to ₹3 lakh</td><td>0%</td></tr>
             <tr><td>₹3L – ₹7L</td><td>5%</td></tr>
             <tr><td>₹7L – ₹10L</td><td>10%</td></tr>
@@ -181,7 +192,7 @@
             <tr><td>Above ₹15L</td><td>30%</td></tr>
           </tbody>
         </table>
-        <div style="font-size:11px; color:#4338ca; margin-top:6px;">Std. deduction ₹75,000 · 87A rebate up to ₹7L taxable income</div>
+        <div id="new-slab-note" style="font-size:11px; color:#4338ca; margin-top:6px;">Std. deduction ₹75,000 · 87A rebate up to ₹7L taxable income</div>
       </div>
       <div>
         <div style="font-size:12px; font-weight:800; color:#92400e; margin-bottom:6px;">OLD REGIME (below 60)</div>
@@ -231,7 +242,7 @@
     </details>
     <details>
       <summary>Is 12 lakh salary tax free in new regime?</summary>
-      <p>No. At ₹12 lakh gross salary, taxable income after ₹75K standard deduction is ₹11.25 lakh. Tax under new regime is approximately ₹1,23,750 + 4% cess = ₹1,28,700. Income must be ₹7.75 lakh or less to be effectively tax-free.</p>
+      <p><strong>FY 2025-26: Yes.</strong> Budget 2025 raised the Section 87A rebate to ₹60,000 for taxable income up to ₹12 lakh. After ₹75,000 standard deduction, a gross salary of ₹12.75 lakh gives taxable income of ₹12 lakh — which attracts ₹60,000 tax on the new slabs, fully covered by the ₹60,000 rebate. Final tax = ₹0.<br><strong>FY 2024-25: No.</strong> At ₹12 lakh gross, taxable income is ₹11.25 lakh. Tax ≈ ₹1,23,750 + cess. Only incomes up to ₹7.75 lakh were zero-tax in FY 2024-25.</p>
     </details>
     <details>
       <summary>Can I switch between new and old regime every year?</summary>
@@ -258,15 +269,43 @@
 let currentBreakdown = 'new';
 let lastNew, lastOld;
 
-function calculate() {
-  const gross = parseFloat(document.getElementById('gross').value) || 0;
-  const d80C  = parseFloat(document.getElementById('d80c').value) || 0;
-  const d80D  = parseFloat(document.getElementById('d80d').value) || 0;
-  const hra   = parseFloat(document.getElementById('hra').value) || 0;
-  const other = parseFloat(document.getElementById('other-ded').value) || 0;
+const FY_LABELS = {
+  '2425': { fy: 'FY 2024-25', ay: 'AY 2025-26', rebateNote: 'Std. deduction ₹75,000 · 87A rebate up to ₹7L taxable income', regimeNote: 'Std. deduction: ₹75,000 · 87A rebate ≤ ₹7L' },
+  '2526': { fy: 'FY 2025-26', ay: 'AY 2026-27', rebateNote: 'Std. deduction ₹75,000 · 87A rebate up to ₹12L taxable income', regimeNote: 'Std. deduction: ₹75,000 · 87A rebate ≤ ₹12L (₹0 tax up to ₹12.75L gross)' }
+};
 
-  lastNew = calcNew(gross);
-  lastOld = calcOld(gross, { d80C, d80D, hra, other });
+const NEW_SLABS_HTML = {
+  '2425': `<tr><td>Up to ₹3 lakh</td><td>0%</td></tr><tr><td>₹3L – ₹7L</td><td>5%</td></tr><tr><td>₹7L – ₹10L</td><td>10%</td></tr><tr><td>₹10L – ₹12L</td><td>15%</td></tr><tr><td>₹12L – ₹15L</td><td>20%</td></tr><tr><td>Above ₹15L</td><td>30%</td></tr>`,
+  '2526': `<tr><td>Up to ₹4 lakh</td><td>0%</td></tr><tr><td>₹4L – ₹8L</td><td>5%</td></tr><tr><td>₹8L – ₹12L</td><td>10%</td></tr><tr><td>₹12L – ₹16L</td><td>15%</td></tr><tr><td>₹16L – ₹20L</td><td>20%</td></tr><tr><td>₹20L – ₹24L</td><td>25%</td></tr><tr><td>Above ₹24L</td><td>30%</td></tr>`
+};
+
+function getYear() {
+  return document.getElementById('fy-select').value;
+}
+
+function onYearChange() {
+  const yr = getYear();
+  const lbl = FY_LABELS[yr];
+  document.getElementById('header-fy').textContent = lbl.fy + ' (' + lbl.ay + ')';
+  document.getElementById('page-h1').textContent = 'Income Tax Calculator — ' + lbl.fy;
+  document.getElementById('slab-ref-title').textContent = lbl.fy + ' Tax Slabs Reference';
+  document.getElementById('new-slab-body').innerHTML = NEW_SLABS_HTML[yr];
+  document.getElementById('new-slab-note').textContent = lbl.rebateNote;
+  document.getElementById('new-regime-note').textContent = lbl.regimeNote;
+  calculate();
+}
+
+function calculate() {
+  const gross       = parseFloat(document.getElementById('gross').value) || 0;
+  const d80C        = parseFloat(document.getElementById('d80c').value) || 0;
+  const d80D        = parseFloat(document.getElementById('d80d').value) || 0;
+  const hra         = parseFloat(document.getElementById('hra').value) || 0;
+  const other       = parseFloat(document.getElementById('other-ded').value) || 0;
+  const employerNPS = parseFloat(document.getElementById('employer-nps').value) || 0;
+  const year        = getYear();
+
+  lastNew = calcNew(gross, employerNPS, year);
+  lastOld = calcOld(gross, { d80C, d80D, hra, other, employerNPS }, year);
 
   document.getElementById('new-tax').textContent = fmt(lastNew.totalTax);
   document.getElementById('new-sub').textContent = 'Taxable: ' + fmt(lastNew.taxableIncome);
@@ -308,23 +347,27 @@ function showBreakdown(regime) {
   document.getElementById('btn-old').style.background = regime === 'old' ? '#fef3c7' : 'none';
   document.getElementById('btn-old').style.borderColor = regime === 'old' ? '#fde68a' : 'var(--border)';
 
+  const gross = parseFloat(document.getElementById('gross').value) || 0;
   const rows = [];
+
   if (regime === 'new') {
-    rows.push(['Gross Income', fmt(parseFloat(document.getElementById('gross').value) || 0)]);
+    rows.push(['Gross Income', fmt(gross)]);
     rows.push(['Standard Deduction', '− ' + fmt(data.stdDed)]);
+    if (data.employerNPS) rows.push(['Employer NPS — 80CCD(2)', '− ' + fmt(data.employerNPS)]);
     rows.push(['Taxable Income', fmt(data.taxableIncome)]);
-    rows.push(['Tax on Slabs', fmt(data.tax + data.rebate)]);
+    rows.push(['Tax on Slabs', fmt(data.tax + data.rebate + (data.marginalRelief || 0))]);
     if (data.rebate) rows.push(['87A Rebate', '− ' + fmt(data.rebate)]);
+    if (data.marginalRelief) rows.push(['Marginal Relief', '− ' + fmt(data.marginalRelief)]);
     if (data.surcharge) rows.push(['Surcharge', fmt(data.surcharge)]);
     rows.push(['Health & Education Cess (4%)', fmt(data.cess)]);
     rows.push(['TOTAL TAX', fmt(data.totalTax)]);
   } else {
-    const gross = parseFloat(document.getElementById('gross').value) || 0;
     rows.push(['Gross Income', fmt(gross)]);
     rows.push(['Standard Deduction', '− ' + fmt(data.stdDed)]);
     if (data.total80C) rows.push(['80C Deductions', '− ' + fmt(data.total80C)]);
     if (data.total80D) rows.push(['80D (Health Insurance)', '− ' + fmt(data.total80D)]);
     if (data.hraEx) rows.push(['HRA Exemption', '− ' + fmt(data.hraEx)]);
+    if (data.employerNPS) rows.push(['Employer NPS — 80CCD(2)', '− ' + fmt(data.employerNPS)]);
     if (data.otherDed) rows.push(['Other Deductions', '− ' + fmt(data.otherDed)]);
     rows.push(['Taxable Income', fmt(data.taxableIncome)]);
     rows.push(['Tax on Slabs', fmt(data.tax + data.rebate)]);
