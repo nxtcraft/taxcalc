@@ -57,7 +57,7 @@
 
 <div class="site-header">
   <div class="site-header-inner">
-    <div class="logo">Tax<span>Calc</span> <span id="header-fy" style="font-size:13px; opacity:.7; font-weight:400;">FY 2024-25 (AY 2025-26)</span></div>
+    <div class="logo">Tax<span>Calc</span> <span id="header-fy" style="font-size:13px; opacity:.7; font-weight:400;">FY 2025-26 (AY 2026-27)</span></div>
     <nav class="header-nav">
       <a href="index.html" class="active">📊 Income Tax</a>
       <a href="hra/">🏠 HRA Calculator</a>
@@ -68,10 +68,10 @@
 
 <div class="container">
   <div style="display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:10px; margin:16px 0 4px;">
-    <h1 id="page-h1" style="font-size:20px; font-weight:800; margin:0;">Income Tax Calculator — FY 2024-25</h1>
+    <h1 id="page-h1" style="font-size:20px; font-weight:800; margin:0;">Income Tax Calculator — FY 2025-26</h1>
     <select id="fy-select" onchange="onYearChange()" style="padding:6px 10px; border-radius:8px; border:1.5px solid #c7d2fe; background:#eef2ff; color:#4338ca; font-size:13px; font-weight:700; cursor:pointer;">
+      <option value="2526" selected>FY 2025-26 (AY 2026-27)</option>
       <option value="2425">FY 2024-25 (AY 2025-26)</option>
-      <option value="2526">FY 2025-26 (AY 2026-27)</option>
     </select>
   </div>
   <p style="font-size:13px; color:#92400e; margin-bottom:20px;">New regime vs old regime comparison — enter your salary and deductions to see which saves more tax</p>
@@ -382,7 +382,7 @@ function showBreakdown(regime) {
     rows.map((r, i) => `<tr class="${i === lastIdx ? 'total-row' : ''}"><td>${r[0]}</td><td style="text-align:right">${r[1]}</td></tr>`).join('');
 }
 
-calculate();
+onYearChange();
 </script>
 </body>
 </html>
