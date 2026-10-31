@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Take-Home Salary Calculator India FY 2024-25 — In-Hand Salary | TaxCalc</title>
+<meta name="description" content="Calculate your monthly take-home salary for FY 2024-25. Deducts income tax, PF, professional tax. Shows exact in-hand salary under new and old regime.">
+<meta name="keywords" content="take home salary calculator india, in hand salary calculator, monthly salary after tax, salary calculator 2024-25, net salary calculator india, CTC to take home">
+<link rel="canonical" href="https://nxtcraft.github.io/taxcalc/take-home/">
+<meta property="og:title" content="Take-Home Salary Calculator India FY 2024-25">
+<meta property="og:description" content="Calculate exact monthly in-hand salary after tax, PF, and professional tax deductions.">
+<meta property="og:type" content="website">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="stylesheet" href="../css/main.css">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "Take-Home Salary Calculator",
+  "url": "https://nxtcraft.github.io/taxcalc/take-home/",
+  "description": "Calculate monthly take-home salary after income tax, PF, and professional tax for FY 2024-25.",
+  "applicationCategory": "FinanceApplication",
+  "offers": { "@type": "Offer", "price": "0", "priceCurrency": "INR" }
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "How to calculate take-home salary from CTC?",
+      "acceptedAnswer": { "@type": "Answer", "text": "Take-home salary = CTC − Employee PF (12% of basic, max ₹1,800/month) − Professional Tax (₹200/month in most states) − Income Tax (based on regime chosen). This calculator shows the exact breakdown." }
+    },
+    {
+      "@type": "Question",
+      "name": "What is the PF deduction on salary?",
+      "acceptedAnswer": { "@type": "Answer", "text": "Employee PF contribution is 12% of basic salary, subject to a ceiling of ₹15,000 basic (max ₹1,800/month). Employer also contributes 12%, which goes toward your EPF corpus but is not a deduction from take-home pay." }
+    },
+    {
+      "@type": "Question",
+      "name": "Is professional tax deductible from income tax?",
+      "acceptedAnswer": { "@type": "Answer", "text": "Yes. Professional tax paid is fully deductible from gross income under both old and new tax regimes. It reduces your taxable income by the amount of professional tax paid." }
+    }
+  ]
+}
+</script>
+</head>
+<body>
+
+<div class="site-header">
+  <div class="site-header-inner">
+    <div class="logo">Tax<span>Calc</span> <span style="font-size:13px; opacity:.7; font-weight:400;">FY 2024-25 (AY 2025-26)</span></div>
+    <nav class="header-nav">
+      <a href="../index.html">📊 Income Tax</a>
+      <a href="../hra/">🏠 HRA Calculator</a>
+      <a href="index.html" class="active">💰 Take-Home Salary</a>
+    </nav>
+  </div>
+</div>
+
+<div class="container">
+  <h1 style="font-size:20px; font-weight:800; margin:16px 0 4px;">Take-Home Salary Calculator — FY 2024-25</h1>
+  <p style="font-size:13px; color:#92400e; margin-bottom:20px;">Enter your CTC or gross salary to see exact monthly in-hand amount after all deductions</p>
+
+  <div class="two-col">
+    <!-- INPUT -->
+    <div>
+      <div class="card" style="margin-bottom:14px;">
+        <div class="card-title">Salary Details</div>
+
+        <div class="field">
+          <label>Annual CTC / Gross Salary</label>
+          <div class="input-prefix"><span>₹</span><input type="number" id="ctc" value="1200000" min="0" step="10000" oninput="calcTakeHome()"></div>
+        </div>
+        <div class="field">
+          <label>Basic Salary (Annual)</label>
+          <div class="input-prefix"><span>₹</span><input type="number" id="basic-th" value="480000" min="0" step="10000" oninput="calcTakeHome()"></div>
+          <div style="font-size:11px; color:#92400e; margin-top:3px;">Usually 40–50% of CTC. PF is calculated on basic salary.</div>
+        </div>
+        <div class="field">
+          <label>Tax Regime</label>
+          <select id="regime" onchange="calcTakeHome()">
+            <option value="new">New Regime (default from FY 2023-24)</option>
+            <option value="old">Old Regime (opt-in required)</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-title">Old Regime Deductions</div>
+        <div id="old-ded-section">
+          <div class="field">
+            <label>Section 80C (max ₹1.5L)</label>
+            <div class="input-prefix"><span>₹</span><input type="number" id="th-80c" value="150000" min="0" max="150000" step="5000" oninput="calcTakeHome()"></div>
+          </div>
+          <div class="field">
+            <label>Section 80D — Health Insurance</label>
+            <div class="input-prefix"><span>₹</span><input type="number" id="th-80d" value="25000" min="0" max="75000" step="5000" oninput="calcTakeHome()"></div>
+          </div>
+          <div class="field">
+            <label>HRA Exemption</label>
+            <div class="input-prefix"><span>₹</span><input type="number" id="th-hra" value="0" min="0" step="5000" oninput="calcTakeHome()"></div>
+            <div style="font-size:11px; color:#92400e; margin-top:3px;"><a href="../hra/" style="color:#d97706;">Calculate HRA →</a></div>
+          </div>
+        </div>
+        <div style="font-size:12px; color:#92400e; background:#fffbeb; padding:10px; border-radius:8px; display:none;" id="new-ded-note">Old regime deductions not available in new regime.</div>
+      </div>
+    </div>
+
+    <!-- RESULT -->
+    <div>
+      <!-- TAKE-HOME HIGHLIGHT -->
+      <div style="background:linear-gradient(135deg, #4f46e5, #7c3aed); border-radius:16px; padding:20px; color:white; margin-bottom:14px; text-align:center;">
+        <div style="font-size:12px; font-weight:800; opacity:.8; margin-bottom:6px; text-transform:uppercase;">Monthly Take-Home Salary</div>
+        <div style="font-size:36px; font-weight:900; margin-bottom:2px;" id="th-monthly">₹0</div>
+        <div style="font-size:12px; opacity:.8;" id="th-regime-note">New Regime</div>
+      </div>
+
+      <!-- ANNUAL BREAKDOWN -->
+      <div class="card">
+        <div class="card-title">Annual Salary Breakdown</div>
+        <table class="breakdown" id="th-breakdown"></table>
+      </div>
+
+      <!-- MONTHLY BREAKDOWN -->
+      <div class="card" style="margin-top:14px;">
+        <div class="card-title">Monthly Breakdown</div>
+        <table class="breakdown" id="th-monthly-breakdown"></table>
+      </div>
+    </div>
+  </div>
+
+  <!-- SEO -->
+  <div class="seo">
+    <h2>Take-Home Salary Calculator — CTC to In-Hand</h2>
+    <p>This calculator converts your CTC (Cost to Company) or gross salary to your actual monthly take-home (in-hand) salary. It deducts income tax (new or old regime), employee PF, and professional tax to show the exact amount credited to your bank account each month.</p>
+
+    <h3>What is deducted from gross salary?</h3>
+    <ul>
+      <li><strong>Income Tax</strong> — calculated on taxable income after standard deduction and your chosen deductions</li>
+      <li><strong>Employee PF</strong> — 12% of basic salary (capped at ₹1,800/month for basic ≤ ₹15,000)</li>
+      <li><strong>Professional Tax</strong> — ₹200/month (₹2,400/year) in most states like Maharashtra, Karnataka, AP, Telangana. Zero in Delhi, UP, Rajasthan, Haryana.</li>
+    </ul>
+
+    <h3>CTC vs Gross Salary vs Take-Home</h3>
+    <ul>
+      <li><strong>CTC (Cost to Company)</strong> — total employer cost including employer PF, gratuity, insurance</li>
+      <li><strong>Gross Salary</strong> — CTC minus employer PF and gratuity (what appears on payslip before deductions)</li>
+      <li><strong>Take-Home / Net Salary</strong> — gross minus employee PF, professional tax, and income tax</li>
+    </ul>
+
+    <h3>Frequently Asked Questions</h3>
+    <details>
+      <summary>What % of CTC is take-home pay?</summary>
+      <p>For most salaried employees in India, take-home pay is typically 65–80% of CTC. The gap is due to employer PF, gratuity, income tax, and other deductions. Higher earners see a lower percentage due to higher tax rates.</p>
+    </details>
+    <details>
+      <summary>Is PF calculated on gross salary or basic salary?</summary>
+      <p>PF is calculated on basic salary (not gross). The employee contributes 12% of basic salary, capped at ₹15,000 basic (maximum deduction ₹1,800/month). If your basic exceeds ₹15,000, you still pay on the full basic unless your employer caps it.</p>
+    </details>
+    <details>
+      <summary>What states charge professional tax?</summary>
+      <p>States that levy professional tax include Maharashtra (₹200/month), Karnataka (₹200/month), West Bengal (up to ₹200/month), Andhra Pradesh, Telangana, Tamil Nadu, Gujarat, and Odisha. Delhi, UP, Rajasthan, Haryana, Uttarakhand, J&K do NOT charge professional tax.</p>
+    </details>
+
+    <div style="margin-top:20px; text-align:center; font-size:12px; color:#92400e;">
+      Also try: <a href="../index.html" style="color:#d97706;">Income Tax Calculator</a> ·
+      <a href="../hra/" style="color:#d97706;">HRA Calculator</a> ·
+      <a href="https://nxtcraft.github.io/emicalc/" style="color:#d97706;">EMI Calculator</a>
+    </div>
+  </div>
+</div>
+
+<footer>&copy; 2025 TaxCalc · <a href="https://nxtcraft.github.io/">NxtCraft Tools</a></footer>
+
+<script src="../js/tax.js"></script>
+<script>
+function calcTakeHome() {
+  const ctc     = parseFloat(document.getElementById('ctc').value) || 0;
+  const basic   = parseFloat(document.getElementById('basic-th').value) || 0;
+  const regime  = document.getElementById('regime').value;
+  const d80c    = parseFloat(document.getElementById('th-80c').value) || 0;
+  const d80d    = parseFloat(document.getElementById('th-80d').value) || 0;
+  const hraEx   = parseFloat(document.getElementById('th-hra').value) || 0;
+
+  // Show/hide old regime fields
+  document.getElementById('old-ded-section').style.display = regime === 'old' ? 'block' : 'none';
+  document.getElementById('new-ded-note').style.display    = regime === 'old' ? 'none' : 'block';
+
+  // Deductions
+  const pfMonthly   = Math.min(basic / 12, 15000) * 0.12;
+  const pfAnnual    = pfMonthly * 12;
+  const profTax     = 2400;
+
+  // Tax
+  const taxResult = regime === 'new'
+    ? calcNew(ctc)
+    : calcOld(ctc, { d80C: d80c, d80D: d80d, hra: hraEx });
+
+  const totalTax     = taxResult.totalTax;
+  const totalDed     = pfAnnual + profTax + totalTax;
+  const takeHome     = ctc - totalDed;
+  const takeHomeM    = takeHome / 12;
+
+  document.getElementById('th-monthly').textContent  = fmt(takeHomeM);
+  document.getElementById('th-regime-note').textContent = regime === 'new' ? 'New Regime' : 'Old Regime';
+
+  const rows = [
+    ['Annual CTC / Gross', fmt(ctc)],
+    ['Employee PF (12% of basic)', '− ' + fmt(pfAnnual)],
+    ['Professional Tax', '− ' + fmt(profTax)],
+    ['Income Tax (' + (regime === 'new' ? 'New' : 'Old') + ' Regime)', '− ' + fmt(totalTax)],
+    ['Annual Take-Home', fmt(takeHome)],
+  ];
+  document.getElementById('th-breakdown').innerHTML =
+    rows.map((r, i) => `<tr class="${i === rows.length - 1 ? 'total-row' : ''}"><td>${r[0]}</td><td style="text-align:right">${r[1]}</td></tr>`).join('');
+
+  const mRows = [
+    ['Monthly Gross', fmt(ctc / 12)],
+    ['Employee PF', '− ' + fmt(pfMonthly)],
+    ['Professional Tax', '− ' + fmt(profTax / 12)],
+    ['Income Tax (monthly)', '− ' + fmt(totalTax / 12)],
+    ['Monthly Take-Home', fmt(takeHomeM)],
+  ];
+  document.getElementById('th-monthly-breakdown').innerHTML =
+    mRows.map((r, i) => `<tr class="${i === mRows.length - 1 ? 'total-row' : ''}"><td>${r[0]}</td><td style="text-align:right">${r[1]}</td></tr>`).join('');
+}
+calcTakeHome();
+</script>
+</body>
+</html>
