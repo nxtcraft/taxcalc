@@ -83,7 +83,7 @@
         <div class="card-title">Your Income</div>
         <div class="field">
           <label>Annual Gross Salary / Income</label>
-          <div class="input-prefix"><span>₹</span><input type="number" id="gross" value="1200000" min="0" step="10000" oninput="calculate()"></div>
+          <div class="input-prefix"><span>₹</span><input type="number" id="gross" value="1500000" min="0" step="10000" oninput="calculate()"></div>
         </div>
         <div class="field">
           <label>Age</label>
@@ -133,6 +133,7 @@
           <div class="regime-tax" id="new-tax">₹0</div>
           <div class="regime-sub" id="new-sub">Taxable: ₹0</div>
           <div id="new-regime-note" style="font-size:11px; color:#4338ca; margin-top:6px;">Std. deduction: ₹75,000</div>
+          <div id="zero-tax-note" style="display:none; font-size:11px; background:#d1fae5; color:#065f46; border-radius:6px; padding:5px 8px; margin-top:7px; font-weight:600;">✅ Correct — Budget 2025 makes income up to ₹12.75L gross tax-free</div>
         </div>
         <div class="regime-card old-regime" id="card-old">
           <div class="regime-label">Old Regime</div>
@@ -310,6 +311,7 @@ function calculate() {
   document.getElementById('new-tax').textContent = fmt(lastNew.totalTax);
   document.getElementById('new-sub').textContent = 'Taxable: ' + fmt(lastNew.taxableIncome);
   document.getElementById('new-monthly').textContent = fmt((gross - lastNew.totalTax) / 12);
+  document.getElementById('zero-tax-note').style.display = (lastNew.totalTax === 0 && lastNew.rebate > 0 && year === '2526') ? '' : 'none';
 
   document.getElementById('old-tax').textContent = fmt(lastOld.totalTax);
   document.getElementById('old-sub').textContent = 'Taxable: ' + fmt(lastOld.taxableIncome);
