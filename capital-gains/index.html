@@ -1,0 +1,542 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-R9EW10BJGW"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-R9EW10BJGW');</script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Capital Gains Tax Calculator India FY 2024-25 – LTCG STCG | TaxCalc</title>
+<meta name="description" content="Free capital gains tax calculator India FY 2024-25. Calculate LTCG and STCG on stocks, mutual funds, property, gold. Includes indexation for debt funds and property. Budget 2024 rates.">
+<meta name="keywords" content="capital gains tax calculator india, LTCG calculator, STCG calculator, capital gains on shares, mutual fund tax calculator, property capital gains india 2024-25">
+<link rel="canonical" href="https://nxtcraft.github.io/taxcalc/capital-gains/">
+<meta property="og:title" content="Capital Gains Tax Calculator India FY 2024-25">
+<meta property="og:description" content="Calculate LTCG and STCG tax on stocks, mutual funds, property and gold. Updated for Budget 2024 rules.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://nxtcraft.github.io/taxcalc/capital-gains/">
+<link rel="stylesheet" href="../css/main.css">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"Capital Gains Tax Calculator India","url":"https://nxtcraft.github.io/taxcalc/capital-gains/","description":"Calculate LTCG and STCG on stocks, mutual funds, property and gold for FY 2024-25.","applicationCategory":"FinanceApplication","offers":{"@type":"Offer","price":"0","priceCurrency":"INR"}}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"What is the LTCG tax rate on equity in FY 2024-25?","acceptedAnswer":{"@type":"Answer","text":"After Budget 2024: LTCG on listed equity shares and equity mutual funds is taxed at 12.5% (up from 10%) for gains above ₹1.25 lakh per year. Holding period: more than 12 months."}},{"@type":"Question","name":"What is STCG tax rate on equity?","acceptedAnswer":{"@type":"Answer","text":"STCG on listed equity shares and equity mutual funds is 20% (up from 15% before Budget 2024). This applies if held for 12 months or less."}},{"@type":"Question","name":"Is there indexation benefit on property?","acceptedAnswer":{"@type":"Answer","text":"Budget 2024 removed indexation for property sold after 23 July 2024. LTCG on property is now taxed at 12.5% without indexation. For property purchased before 2001, fair market value as of 2001 can be used as cost."}},{"@type":"Question","name":"How is capital gains on debt mutual funds taxed?","acceptedAnswer":{"@type":"Answer","text":"Post-2023 budget change: debt mutual funds purchased after 1 April 2023 are taxed at slab rates (no LTCG/STCG distinction). Funds purchased before 1 April 2023 follow old rules: LTCG at 20% with indexation if held > 3 years."}}]}</script>
+<style>
+.cg-tabs{display:flex;gap:0;border-bottom:2px solid #fecaca;margin-bottom:20px;overflow-x:auto;scrollbar-width:none}
+.cg-tab{padding:10px 18px;font-size:13px;font-weight:600;color:#6b7280;cursor:pointer;border-bottom:2.5px solid transparent;margin-bottom:-2px;white-space:nowrap;transition:all .15s}
+.cg-tab.active,.cg-tab:hover{color:#dc2626;border-bottom-color:#dc2626}
+.cg-panel{display:none}.cg-panel.active{display:block}
+.result-highlight{background:linear-gradient(135deg,#1e1b4b,#7f1d1d);color:#fff;border-radius:14px;padding:20px;margin-bottom:16px}
+.result-highlight .big{font-size:2rem;font-weight:900}
+.result-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:12px}
+@media(max-width:500px){.result-grid{grid-template-columns:repeat(2,1fr)}}
+.rc{background:rgba(255,255,255,.1);border-radius:8px;padding:8px;text-align:center}
+.rc .v{font-size:1rem;font-weight:800}.rc .l{font-size:10px;opacity:.7;margin-top:2px}
+.tax-badge{display:inline-block;padding:2px 8px;border-radius:4px;font-size:11px;font-weight:700;margin-left:6px}
+.badge-red{background:#fecaca;color:#7f1d1d}
+.badge-green{background:#d1fae5;color:#065f46}
+.badge-amber{background:#fef3c7;color:#78350f}
+.entries-list{display:flex;flex-direction:column;gap:8px;margin-bottom:12px}
+.entry-row{background:var(--surface,#f8fafc);border:1px solid var(--border,#e2e8f0);border-radius:8px;padding:10px;font-size:12px}
+.entry-row .er-head{display:flex;justify-content:space-between;margin-bottom:4px;font-weight:600}
+.entry-row .er-data{color:#6b7280;display:flex;gap:12px;flex-wrap:wrap}
+</style>
+</head>
+<body>
+<div class="site-header">
+  <div class="site-header-top">
+    <a href="../" style="text-decoration:none;color:white;"><div class="logo">Tax<span>Calc</span></div></a>
+    <div style="font-size:13px;opacity:.8">Capital Gains Calculator — FY 2024-25</div>
+  </div>
+  <nav class="header-nav">
+    <a href="../">📊 Income Tax</a>
+    <a href="../hra/">🏠 HRA</a>
+    <a href="../take-home/">💼 Take-Home</a>
+    <a href="" class="active">📈 Capital Gains</a>
+  </nav>
+</div>
+
+<div class="container">
+  <div style="text-align:center;padding:24px 0 16px">
+    <h1 style="font-size:22px;font-weight:800;margin-bottom:6px">Capital Gains Tax Calculator</h1>
+    <p style="font-size:14px;color:#3730a3;max-width:560px;margin:0 auto">Calculate LTCG & STCG on equity, mutual funds, property, gold — updated for Budget 2024 rates (12.5% LTCG, 20% STCG on equity).</p>
+  </div>
+
+  <div class="cg-tabs">
+    <div class="cg-tab active" onclick="showAsset('equity',this)">📈 Equity / Stocks</div>
+    <div class="cg-tab" onclick="showAsset('mf-equity',this)">💼 Equity Mutual Funds</div>
+    <div class="cg-tab" onclick="showAsset('mf-debt',this)">🏦 Debt Mutual Funds</div>
+    <div class="cg-tab" onclick="showAsset('property',this)">🏠 Property</div>
+    <div class="cg-tab" onclick="showAsset('gold',this)">🥇 Gold</div>
+  </div>
+
+  <!-- EQUITY -->
+  <div id="panel-equity" class="cg-panel active">
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px">
+      <div class="card">
+        <div class="card-title">Trade Details</div>
+        <div class="form-group">
+          <label class="form-label">Buy Price (₹ per share)</label>
+          <input class="form-input" type="number" id="eq-buy" value="500" oninput="calcEquity()">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Sell Price (₹ per share)</label>
+          <input class="form-input" type="number" id="eq-sell" value="900" oninput="calcEquity()">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Number of Shares</label>
+          <input class="form-input" type="number" id="eq-qty" value="100" oninput="calcEquity()">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Holding Period</label>
+          <select class="form-input" id="eq-hold" onchange="calcEquity()">
+            <option value="short">≤ 12 months (STCG)</option>
+            <option value="long" selected>More than 12 months (LTCG)</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label class="form-label">STT paid on sell? (listed shares)</label>
+          <select class="form-input" id="eq-stt" onchange="calcEquity()">
+            <option value="yes" selected>Yes (listed on exchange)</option>
+            <option value="no">No (unlisted)</option>
+          </select>
+        </div>
+        <div class="form-group" id="eq-other-income-row">
+          <label class="form-label">Other Taxable Income (₹/year) — for STCG slab</label>
+          <input class="form-input" type="number" id="eq-income" value="1000000" oninput="calcEquity()">
+        </div>
+      </div>
+      <div>
+        <div class="result-highlight" id="eq-result">
+          <div style="font-size:13px;opacity:.7">Capital Gains Tax</div>
+          <div class="big" id="eq-tax">—</div>
+          <div style="font-size:12px;opacity:.65;margin-top:2px" id="eq-type-label">—</div>
+          <div class="result-grid">
+            <div class="rc"><div class="v" id="eq-profit">—</div><div class="l">Gain / Loss</div></div>
+            <div class="rc"><div class="v" id="eq-rate">—</div><div class="l">Tax Rate</div></div>
+            <div class="rc"><div class="v" id="eq-exempt">—</div><div class="l">LTCG Exempt</div></div>
+          </div>
+        </div>
+        <div class="card" id="eq-details-card"></div>
+      </div>
+    </div>
+    <div class="seo-section" style="margin-top:20px">
+      <h3>Equity Tax Rates FY 2024-25 (Budget 2024)</h3>
+      <table style="width:100%;border-collapse:collapse;font-size:13px;margin-top:8px">
+        <tr style="background:#fef2f2"><th style="padding:6px 10px;text-align:left">Type</th><th>Holding</th><th>Tax Rate</th><th>Exempt</th></tr>
+        <tr><td style="padding:5px 10px">Listed equity (STT paid)</td><td>≤12 mo</td><td>20% STCG</td><td>—</td></tr>
+        <tr style="background:#fef2f2"><td style="padding:5px 10px">Listed equity (STT paid)</td><td>>12 mo</td><td>12.5% LTCG</td><td>₹1.25L/year</td></tr>
+        <tr><td style="padding:5px 10px">Unlisted equity</td><td>≤24 mo</td><td>Slab rate</td><td>—</td></tr>
+        <tr style="background:#fef2f2"><td style="padding:5px 10px">Unlisted equity</td><td>>24 mo</td><td>12.5%</td><td>—</td></tr>
+      </table>
+    </div>
+  </div>
+
+  <!-- MF EQUITY -->
+  <div id="panel-mf-equity" class="cg-panel">
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px">
+      <div class="card">
+        <div class="card-title">Mutual Fund Details</div>
+        <div class="form-group"><label class="form-label">Purchase NAV (₹)</label><input class="form-input" type="number" id="mfe-buy" value="100" oninput="calcMFEquity()"></div>
+        <div class="form-group"><label class="form-label">Redemption NAV (₹)</label><input class="form-input" type="number" id="mfe-sell" value="165" oninput="calcMFEquity()"></div>
+        <div class="form-group"><label class="form-label">Units Redeemed</label><input class="form-input" type="number" id="mfe-units" value="1000" oninput="calcMFEquity()"></div>
+        <div class="form-group">
+          <label class="form-label">Holding Period</label>
+          <select class="form-input" id="mfe-hold" onchange="calcMFEquity()">
+            <option value="short">≤ 12 months (STCG @ 20%)</option>
+            <option value="long" selected>More than 12 months (LTCG @ 12.5%)</option>
+          </select>
+        </div>
+        <div class="form-group"><label class="form-label">Equity exposure in fund</label>
+          <select class="form-input" id="mfe-type" onchange="calcMFEquity()">
+            <option value="equity">≥ 65% equity (equity fund)</option>
+            <option value="hybrid">Hybrid / balanced</option>
+          </select>
+        </div>
+      </div>
+      <div>
+        <div class="result-highlight">
+          <div style="font-size:13px;opacity:.7">Capital Gains Tax</div>
+          <div class="big" id="mfe-tax">—</div>
+          <div class="result-grid">
+            <div class="rc"><div class="v" id="mfe-profit">—</div><div class="l">Total Gain</div></div>
+            <div class="rc"><div class="v" id="mfe-rate">—</div><div class="l">Tax Rate</div></div>
+            <div class="rc"><div class="v" id="mfe-exempt">—</div><div class="l">LTCG Exempt</div></div>
+          </div>
+        </div>
+        <div class="card" id="mfe-details"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- DEBT MF -->
+  <div id="panel-mf-debt" class="cg-panel">
+    <div class="card" style="background:#fef3c7;border-color:#fde68a;margin-bottom:16px">
+      <p style="font-size:13px;color:#78350f"><strong>⚠️ Budget 2023 change:</strong> Debt mutual funds bought on/after 1 April 2023 are taxed at your income tax slab rate regardless of holding period — no LTCG/indexation benefit. Only funds bought before 1 April 2023 and held >3 years qualify for 20% LTCG with indexation.</p>
+    </div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px">
+      <div class="card">
+        <div class="card-title">Debt Fund Details</div>
+        <div class="form-group"><label class="form-label">Purchase Date</label>
+          <select class="form-input" id="debt-era" onchange="calcDebt()">
+            <option value="old">Bought before 1 April 2023 (indexation eligible)</option>
+            <option value="new" selected>Bought on/after 1 April 2023 (slab rate)</option>
+          </select>
+        </div>
+        <div class="form-group"><label class="form-label">Purchase NAV (₹)</label><input class="form-input" type="number" id="debt-buy" value="100" oninput="calcDebt()"></div>
+        <div class="form-group"><label class="form-label">Redemption NAV (₹)</label><input class="form-input" type="number" id="debt-sell" value="145" oninput="calcDebt()"></div>
+        <div class="form-group"><label class="form-label">Units Redeemed</label><input class="form-input" type="number" id="debt-units" value="1000" oninput="calcDebt()"></div>
+        <div class="form-group" id="debt-hold-row">
+          <label class="form-label">Holding Period</label>
+          <select class="form-input" id="debt-hold" onchange="calcDebt()">
+            <option value="short">≤ 36 months</option>
+            <option value="long" selected>More than 36 months</option>
+          </select>
+        </div>
+        <div class="form-group" id="debt-cii-row">
+          <label class="form-label">Cost Inflation Index (Purchase Year)</label>
+          <select class="form-input" id="debt-cii-buy" onchange="calcDebt()">
+            <option value="301">FY 2017-18 (301)</option>
+            <option value="317">FY 2018-19 (317)</option>
+            <option value="335">FY 2019-20 (335)</option>
+            <option value="301">FY 2020-21 (301)</option>
+            <option value="317">FY 2021-22 (317)</option>
+            <option value="331" selected>FY 2022-23 (331)</option>
+          </select>
+        </div>
+        <div class="form-group"><label class="form-label">Your Income Tax Slab Rate (%)</label>
+          <select class="form-input" id="debt-slab" onchange="calcDebt()">
+            <option value="5">5%</option><option value="10">10%</option><option value="15">15%</option>
+            <option value="20">20%</option><option value="30" selected>30%</option>
+          </select>
+        </div>
+      </div>
+      <div>
+        <div class="result-highlight">
+          <div style="font-size:13px;opacity:.7">Capital Gains Tax</div>
+          <div class="big" id="debt-tax">—</div>
+          <div class="result-grid">
+            <div class="rc"><div class="v" id="debt-gain">—</div><div class="l">Gain</div></div>
+            <div class="rc"><div class="v" id="debt-rate">—</div><div class="l">Rate</div></div>
+            <div class="rc"><div class="v" id="debt-indexed">—</div><div class="l">Indexed Cost</div></div>
+          </div>
+        </div>
+        <div class="card" id="debt-details"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- PROPERTY -->
+  <div id="panel-property" class="cg-panel">
+    <div class="card" style="background:#fef3c7;border-color:#fde68a;margin-bottom:16px">
+      <p style="font-size:13px;color:#78350f"><strong>⚠️ Budget 2024 change:</strong> For property sold after 23 July 2024, LTCG is now 12.5% without indexation. Indexation was removed. The option to use 20% with indexation was available for property bought before 23 July 2024 (check with your CA).</p>
+    </div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px">
+      <div class="card">
+        <div class="card-title">Property Details</div>
+        <div class="form-group"><label class="form-label">Purchase Price (₹)</label><input class="form-input" type="number" id="prop-buy" value="5000000" oninput="calcProperty()"></div>
+        <div class="form-group"><label class="form-label">Sale Price (₹)</label><input class="form-input" type="number" id="prop-sell" value="9500000" oninput="calcProperty()"></div>
+        <div class="form-group"><label class="form-label">Improvement Cost (₹)</label><input class="form-input" type="number" id="prop-improve" value="0" oninput="calcProperty()"></div>
+        <div class="form-group"><label class="form-label">Holding Period</label>
+          <select class="form-input" id="prop-hold" onchange="calcProperty()">
+            <option value="short">≤ 24 months (STCG)</option>
+            <option value="long" selected>More than 24 months (LTCG)</option>
+          </select>
+        </div>
+        <div class="form-group"><label class="form-label">Your Income Tax Slab Rate (for STCG %)</label>
+          <select class="form-input" id="prop-slab" onchange="calcProperty()">
+            <option value="5">5%</option><option value="20">20%</option><option value="30" selected>30%</option>
+          </select>
+        </div>
+      </div>
+      <div>
+        <div class="result-highlight">
+          <div style="font-size:13px;opacity:.7">Capital Gains Tax</div>
+          <div class="big" id="prop-tax">—</div>
+          <div class="result-grid">
+            <div class="rc"><div class="v" id="prop-gain">—</div><div class="l">Capital Gain</div></div>
+            <div class="rc"><div class="v" id="prop-rate">—</div><div class="l">Rate</div></div>
+            <div class="rc"><div class="v" id="prop-surcharge">—</div><div class="l">+4% Cess</div></div>
+          </div>
+        </div>
+        <div class="card" id="prop-details"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- GOLD -->
+  <div id="panel-gold" class="cg-panel">
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px">
+      <div class="card">
+        <div class="card-title">Gold / SGB Details</div>
+        <div class="form-group"><label class="form-label">Gold Type</label>
+          <select class="form-input" id="gold-type" onchange="calcGold()">
+            <option value="physical">Physical Gold / Jewelry</option>
+            <option value="sgb">Sovereign Gold Bond (SGB)</option>
+            <option value="etf">Gold ETF / Fund of Fund</option>
+          </select>
+        </div>
+        <div class="form-group"><label class="form-label">Purchase Price (₹)</label><input class="form-input" type="number" id="gold-buy" value="50000" oninput="calcGold()"></div>
+        <div class="form-group"><label class="form-label">Sale Price (₹)</label><input class="form-input" type="number" id="gold-sell" value="80000" oninput="calcGold()"></div>
+        <div class="form-group"><label class="form-label">Holding Period</label>
+          <select class="form-input" id="gold-hold" onchange="calcGold()">
+            <option value="short">≤ 24 months (STCG)</option>
+            <option value="long" selected>More than 24 months (LTCG)</option>
+          </select>
+        </div>
+        <div class="form-group"><label class="form-label">Your Tax Slab (for STCG)</label>
+          <select class="form-input" id="gold-slab" onchange="calcGold()">
+            <option value="5">5%</option><option value="20">20%</option><option value="30" selected>30%</option>
+          </select>
+        </div>
+      </div>
+      <div>
+        <div class="result-highlight">
+          <div style="font-size:13px;opacity:.7">Capital Gains Tax</div>
+          <div class="big" id="gold-tax">—</div>
+          <div class="result-grid">
+            <div class="rc"><div class="v" id="gold-gain">—</div><div class="l">Gain</div></div>
+            <div class="rc"><div class="v" id="gold-rate">—</div><div class="l">Rate</div></div>
+            <div class="rc"><div class="v" id="gold-final">—</div><div class="l">Tax + Cess</div></div>
+          </div>
+        </div>
+        <div class="card" id="gold-details"></div>
+      </div>
+    </div>
+    <div class="seo-section" style="margin-top:16px">
+      <h3>Gold Tax Rules FY 2024-25</h3>
+      <ul>
+        <li><strong>Physical gold</strong>: LTCG at 12.5% (held >24 months), STCG at slab rate</li>
+        <li><strong>SGB maturity</strong>: Completely tax exempt if held to 8-year maturity. Premature redemption after 5 years: LTCG at 12.5%</li>
+        <li><strong>Gold ETF / FoF</strong>: Treated as debt fund post-Apr 2023 — taxed at slab rate regardless of holding</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="seo-section" style="margin-top:32px">
+    <h2>Capital Gains Tax in India — Key Rules</h2>
+    <p>Capital gains are profits from selling a capital asset (shares, property, gold, mutual funds). They are classified as LTCG (long-term) or STCG (short-term) based on the holding period, and taxed differently.</p>
+    <h3>Budget 2024 Key Changes</h3>
+    <ul>
+      <li>LTCG on equity raised from 10% to <strong>12.5%</strong></li>
+      <li>STCG on equity raised from 15% to <strong>20%</strong></li>
+      <li>LTCG exemption raised from ₹1 lakh to <strong>₹1.25 lakh</strong></li>
+      <li>Indexation removed on property for sales after 23 July 2024</li>
+    </ul>
+    <p style="font-size:12px;color:#9ca3af;margin-top:10px">* This calculator is for estimation purposes only. Consult a CA for exact computation and filing.</p>
+  </div>
+</div>
+
+<script>
+function showAsset(id, el) {
+  document.querySelectorAll('.cg-panel').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('.cg-tab').forEach(t=>t.classList.remove('active'));
+  document.getElementById('panel-'+id).classList.add('active');
+  el.classList.add('active');
+}
+
+function fmt(n) {
+  const abs = Math.abs(n);
+  let s;
+  if (abs >= 1e7) s = '₹'+(n/1e7).toFixed(2)+' Cr';
+  else if (abs >= 1e5) s = '₹'+(n/1e5).toFixed(2)+' L';
+  else s = '₹'+Math.round(n).toLocaleString('en-IN');
+  return s;
+}
+function pct(r){ return (r*100).toFixed(1)+'%' }
+function withCess(tax){ return tax * 1.04 }
+
+function calcEquity() {
+  const buy = +document.getElementById('eq-buy').value||0;
+  const sell = +document.getElementById('eq-sell').value||0;
+  const qty = +document.getElementById('eq-qty').value||0;
+  const isLong = document.getElementById('eq-hold').value === 'long';
+  const hasStt = document.getElementById('eq-stt').value === 'yes';
+  const income = +document.getElementById('eq-income').value||0;
+
+  const totalBuy = buy * qty, totalSell = sell * qty;
+  const gain = totalSell - totalBuy;
+  let tax = 0, rate = 0, exempt = 0, typeLabel;
+
+  if (hasStt) {
+    if (isLong) {
+      exempt = Math.min(gain, 125000);
+      const taxableGain = Math.max(0, gain - 125000);
+      rate = 0.125;
+      tax = taxableGain * rate;
+      typeLabel = 'LTCG @ 12.5% (exempt ₹1.25L)';
+    } else {
+      rate = 0.20;
+      tax = Math.max(0, gain * rate);
+      typeLabel = 'STCG @ 20%';
+    }
+  } else {
+    // unlisted
+    if (isLong) { rate = 0.125; tax = Math.max(0, gain * rate); typeLabel = 'LTCG @ 12.5% (unlisted)'; }
+    else { rate = slabRate(income) / 100; tax = Math.max(0, gain * rate); typeLabel = `STCG @ slab ${pct(rate)}`; }
+  }
+
+  const taxWithCess = withCess(tax);
+  document.getElementById('eq-tax').textContent = gain < 0 ? 'Loss — No Tax' : fmt(Math.round(taxWithCess));
+  document.getElementById('eq-type-label').textContent = typeLabel + ' + 4% cess';
+  document.getElementById('eq-profit').textContent = fmt(gain);
+  document.getElementById('eq-rate').textContent = gain < 0 ? 'N/A' : pct(rate);
+  document.getElementById('eq-exempt').textContent = fmt(exempt);
+  document.getElementById('eq-details-card').innerHTML = `
+    <div class="card-title">Breakdown</div>
+    <div style="font-size:13px;display:flex;flex-direction:column;gap:6px">
+      <div style="display:flex;justify-content:space-between"><span>Total Buy Value</span><b>${fmt(totalBuy)}</b></div>
+      <div style="display:flex;justify-content:space-between"><span>Total Sell Value</span><b>${fmt(totalSell)}</b></div>
+      <div style="display:flex;justify-content:space-between;color:${gain>=0?'#065f46':'#7f1d1d'}"><span><b>Capital ${gain>=0?'Gain':'Loss'}</b></span><b>${fmt(gain)}</b></div>
+      <div style="display:flex;justify-content:space-between"><span>Taxable Gain</span><b>${fmt(Math.max(0,gain-exempt))}</b></div>
+      <div style="display:flex;justify-content:space-between"><span>Tax (before cess)</span><b>${fmt(Math.round(tax))}</b></div>
+      <div style="display:flex;justify-content:space-between;color:#dc2626"><span><b>Tax + 4% Cess</b></span><b>${fmt(Math.round(taxWithCess))}</b></div>
+    </div>`;
+}
+
+function slabRate(income) {
+  if (income <= 300000) return 0;
+  if (income <= 700000) return 5;
+  if (income <= 1000000) return 10;
+  if (income <= 1200000) return 15;
+  if (income <= 1500000) return 20;
+  return 30;
+}
+
+function calcMFEquity() {
+  const buy = +document.getElementById('mfe-buy').value||0;
+  const sell = +document.getElementById('mfe-sell').value||0;
+  const units = +document.getElementById('mfe-units').value||0;
+  const isLong = document.getElementById('mfe-hold').value === 'long';
+
+  const gain = (sell - buy) * units;
+  let tax = 0, rate = 0, exempt = 0;
+
+  if (isLong) {
+    exempt = Math.min(gain, 125000);
+    const taxable = Math.max(0, gain - 125000);
+    rate = 0.125;
+    tax = taxable * rate;
+  } else {
+    rate = 0.20;
+    tax = Math.max(0, gain * rate);
+  }
+  const taxWithCess = withCess(tax);
+  document.getElementById('mfe-tax').textContent = gain < 0 ? 'Loss' : fmt(Math.round(taxWithCess));
+  document.getElementById('mfe-profit').textContent = fmt(gain);
+  document.getElementById('mfe-rate').textContent = pct(rate);
+  document.getElementById('mfe-exempt').textContent = fmt(exempt);
+  document.getElementById('mfe-details').innerHTML = `<div class="card-title">Breakdown</div>
+    <div style="font-size:13px;display:flex;flex-direction:column;gap:5px">
+      <div style="display:flex;justify-content:space-between"><span>Total Gain</span><b>${fmt(gain)}</b></div>
+      <div style="display:flex;justify-content:space-between"><span>LTCG Exempt</span><b>${fmt(exempt)}</b></div>
+      <div style="display:flex;justify-content:space-between"><span>Taxable Gain</span><b>${fmt(Math.max(0,gain-exempt))}</b></div>
+      <div style="display:flex;justify-content:space-between;color:#dc2626"><span><b>Tax + 4% Cess</b></span><b>${fmt(Math.round(taxWithCess))}</b></div>
+    </div>`;
+}
+
+function calcDebt() {
+  const era = document.getElementById('debt-era').value;
+  const buy = +document.getElementById('debt-buy').value||0;
+  const sell = +document.getElementById('debt-sell').value||0;
+  const units = +document.getElementById('debt-units').value||0;
+  const isLong = document.getElementById('debt-hold').value === 'long';
+  const slab = parseInt(document.getElementById('debt-slab').value)/100;
+  const CII_SELL = 363; // FY 2024-25
+
+  const totalBuy = buy * units, totalSell = sell * units;
+  let tax, rate, indexed = '-', typeLabel;
+
+  if (era === 'new' || !isLong) {
+    const gain = totalSell - totalBuy;
+    tax = Math.max(0, gain * slab);
+    rate = slab;
+    typeLabel = 'Slab rate (no indexation)';
+  } else {
+    const ciiBuy = parseInt(document.getElementById('debt-cii-buy').value)||331;
+    const indexedCost = totalBuy * CII_SELL / ciiBuy;
+    const gain = totalSell - indexedCost;
+    rate = 0.20;
+    tax = Math.max(0, gain * rate);
+    indexed = fmt(Math.round(indexedCost));
+    typeLabel = '20% LTCG with indexation';
+  }
+  const taxWithCess = withCess(tax);
+  document.getElementById('debt-tax').textContent = fmt(Math.round(taxWithCess));
+  document.getElementById('debt-gain').textContent = fmt(totalSell - totalBuy);
+  document.getElementById('debt-rate').textContent = pct(rate);
+  document.getElementById('debt-indexed').textContent = indexed;
+  document.getElementById('debt-details').innerHTML = `<div class="card-title">Breakdown</div>
+    <div style="font-size:13px;display:flex;flex-direction:column;gap:5px">
+      <div style="display:flex;justify-content:space-between"><span>${typeLabel}</span></div>
+      <div style="display:flex;justify-content:space-between"><span>Purchase Value</span><b>${fmt(totalBuy)}</b></div>
+      <div style="display:flex;justify-content:space-between"><span>Sale Value</span><b>${fmt(totalSell)}</b></div>
+      <div style="display:flex;justify-content:space-between;color:#dc2626"><span><b>Tax + 4% Cess</b></span><b>${fmt(Math.round(taxWithCess))}</b></div>
+    </div>`;
+}
+
+function calcProperty() {
+  const buy = +document.getElementById('prop-buy').value||0;
+  const sell = +document.getElementById('prop-sell').value||0;
+  const improve = +document.getElementById('prop-improve').value||0;
+  const isLong = document.getElementById('prop-hold').value === 'long';
+  const slab = parseInt(document.getElementById('prop-slab').value)/100;
+
+  const totalCost = buy + improve;
+  const gain = sell - totalCost;
+  let tax, rate;
+
+  if (isLong) {
+    rate = 0.125;
+    tax = Math.max(0, gain * rate);
+  } else {
+    rate = slab;
+    tax = Math.max(0, gain * rate);
+  }
+  const taxWithCess = withCess(tax);
+  document.getElementById('prop-tax').textContent = gain < 0 ? 'Loss' : fmt(Math.round(taxWithCess));
+  document.getElementById('prop-gain').textContent = fmt(gain);
+  document.getElementById('prop-rate').textContent = (rate*100)+'%';
+  document.getElementById('prop-surcharge').textContent = fmt(Math.round(taxWithCess - tax));
+  document.getElementById('prop-details').innerHTML = `<div class="card-title">Breakdown</div>
+    <div style="font-size:13px;display:flex;flex-direction:column;gap:5px">
+      <div style="display:flex;justify-content:space-between"><span>Purchase + Improvement</span><b>${fmt(totalCost)}</b></div>
+      <div style="display:flex;justify-content:space-between"><span>Sale Price</span><b>${fmt(sell)}</b></div>
+      <div style="display:flex;justify-content:space-between"><span>Capital Gain</span><b>${fmt(gain)}</b></div>
+      <div style="display:flex;justify-content:space-between"><span>Tax (${(rate*100)}%)</span><b>${fmt(Math.round(tax))}</b></div>
+      <div style="display:flex;justify-content:space-between;color:#dc2626"><span><b>Tax + 4% Cess</b></span><b>${fmt(Math.round(taxWithCess))}</b></div>
+    </div>`;
+}
+
+function calcGold() {
+  const goldType = document.getElementById('gold-type').value;
+  const buy = +document.getElementById('gold-buy').value||0;
+  const sell = +document.getElementById('gold-sell').value||0;
+  const isLong = document.getElementById('gold-hold').value === 'long';
+  const slab = parseInt(document.getElementById('gold-slab').value)/100;
+
+  const gain = sell - buy;
+  let tax, rate, note='';
+
+  if (goldType === 'sgb' && isLong) {
+    tax = 0; rate = 0; note = 'SGB held to maturity — Exempt from tax';
+  } else if (goldType === 'etf') {
+    rate = slab; tax = Math.max(0, gain * rate); note = 'Gold ETF taxed at slab rate (post-Apr 2023 rules)';
+  } else {
+    if (isLong) { rate = 0.125; tax = Math.max(0, gain * rate); }
+    else { rate = slab; tax = Math.max(0, gain * rate); }
+  }
+  const taxWithCess = withCess(tax);
+  document.getElementById('gold-tax').textContent = tax === 0 ? 'EXEMPT' : fmt(Math.round(taxWithCess));
+  document.getElementById('gold-gain').textContent = fmt(gain);
+  document.getElementById('gold-rate').textContent = pct(rate);
+  document.getElementById('gold-final').textContent = fmt(Math.round(taxWithCess));
+  document.getElementById('gold-details').innerHTML = `<div class="card-title">Breakdown</div>
+    <div style="font-size:13px;display:flex;flex-direction:column;gap:5px">
+      ${note?`<div style="color:#d97706">${note}</div>`:''}
+      <div style="display:flex;justify-content:space-between"><span>Gain</span><b>${fmt(gain)}</b></div>
+      <div style="display:flex;justify-content:space-between;color:#dc2626"><span><b>Tax + 4% Cess</b></span><b>${fmt(Math.round(taxWithCess))}</b></div>
+    </div>`;
+}
+
+// Init all calculators
+calcEquity(); calcMFEquity(); calcDebt(); calcProperty(); calcGold();
+</script>
+<script>if('serviceWorker'in navigator)navigator.serviceWorker.register('/taxcalc/sw.js');</script>
+</body>
+</html>
