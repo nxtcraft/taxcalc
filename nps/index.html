@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-R9EW10BJGW"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-R9EW10BJGW');</script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>NPS Calculator India – Tax Saving 80CCD 80C National Pension Scheme</title>
+<meta name="description" content="Free NPS calculator. Calculate NPS tax benefits under 80CCD(1), 80CCD(1B) ₹50,000 extra and 80CCD(2) employer contribution. Estimate maturity corpus and pension.">
+<link rel="canonical" href="https://nxtcraft.github.io/taxcalc/nps/">
+<meta property="og:title" content="NPS Calculator — Tax Saving & Maturity Corpus India">
+<meta property="og:description" content="Calculate NPS tax deductions under 80C, 80CCD(1B), 80CCD(2). Estimate retirement corpus. Free, instant.">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+body{background:#fffbf0;color:#1c1917;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;min-height:100vh}
+nav.header-nav{background:#d97706;padding:.6rem 1.2rem;display:flex;gap:.75rem;flex-wrap:wrap}
+nav.header-nav a{color:rgba(255,255,255,.8);font-size:.82rem;font-weight:600;text-decoration:none;padding:.25rem .5rem;border-radius:5px}
+nav.header-nav a:hover,nav.header-nav a.active{color:#fff;background:rgba(255,255,255,.2)}
+main{max-width:820px;margin:0 auto;padding:1.5rem}
+h1{font-size:1.5rem;font-weight:800;margin-bottom:.25rem}
+.sub{color:#78350f;font-size:.9rem;margin-bottom:1.5rem}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
+@media(max-width:620px){.grid2{grid-template-columns:1fr}}
+.card{background:#fff;border:1px solid #fde68a;border-radius:12px;padding:1.25rem;margin-bottom:1rem}
+label{display:block;font-size:.8rem;font-weight:600;color:#92400e;margin:.5rem 0 .2rem}
+input,select{width:100%;background:#fffbf0;border:1.5px solid #fde68a;color:#1c1917;border-radius:8px;padding:.45rem .7rem;font-size:.9rem;outline:none}
+input:focus{border-color:#d97706}
+.result-hero{background:linear-gradient(135deg,#b45309,#d97706);color:#fff;border-radius:14px;padding:1.5rem;margin-bottom:1rem}
+.hero-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:.6rem;margin-top:.75rem}
+.hero-stat{background:rgba(255,255,255,.12);border-radius:9px;padding:.6rem;text-align:center}
+.hero-stat .v{font-size:1rem;font-weight:800}
+.hero-stat .l{font-size:.7rem;opacity:.7;margin-top:.1rem}
+.section-title{font-weight:700;color:#92400e;margin-bottom:.5rem;font-size:.9rem}
+.deduction-row{display:flex;justify-content:space-between;align-items:center;padding:.4rem 0;border-bottom:1px solid #fef9c3;font-size:.85rem}
+.deduction-row:last-child{border-bottom:none}
+.deduction-row .amt{font-weight:700;color:#15803d}
+.deduction-row .limit{color:#9ca3af;font-size:.77rem}
+.tax-saving-box{background:#f0fdf4;border:1px solid #bbf7d0;border-radius:8px;padding:.75rem;font-size:.85rem;margin-top:.75rem}
+.range-wrap{display:flex;gap:.5rem;align-items:center}
+.range-wrap input[type=range]{flex:1;accent-color:#d97706}
+footer{text-align:center;padding:1.5rem;color:#9ca3af;font-size:.78rem;border-top:1px solid #fde68a;margin-top:2rem}
+</style>
+</head>
+<body>
+<nav class="header-nav">
+  <a href="../">📊 Income Tax</a>
+  <a href="../hra/">🏠 HRA</a>
+  <a href="../take-home/">💰 Take-Home</a>
+  <a href="../capital-gains/">📈 Capital Gains</a>
+  <a href="../advance-tax/">📅 Advance Tax</a>
+  <a href="../nps/" class="active">🏦 NPS</a>
+</nav>
+<main>
+  <h1>NPS Calculator</h1>
+  <p class="sub">National Pension Scheme tax benefits and maturity corpus estimator. FY 2024-25.</p>
+
+  <div class="grid2">
+    <div class="card">
+      <div class="section-title">Your Details</div>
+      <label>Annual Gross Income (₹)</label>
+      <input type="number" id="income" value="1200000" oninput="calc()">
+      <label>Tax Regime</label>
+      <select id="regime" onchange="calc()">
+        <option value="new">New Regime</option>
+        <option value="old">Old Regime</option>
+      </select>
+      <label>Your Age</label>
+      <input type="number" id="age" value="30" min="18" max="65" oninput="calc()">
+      <label>Expected Return (% p.a.)</label>
+      <div class="range-wrap">
+        <input type="range" id="ret-slider" min="6" max="14" value="10" step="0.5" oninput="document.getElementById('ret-val').value=this.value;calc()">
+        <input type="number" id="ret-val" value="10" step="0.5" style="width:60px" oninput="document.getElementById('ret-slider').value=this.value;calc()">
+        <span style="color:#92400e;font-size:.85rem">%</span>
+      </div>
+    </div>
+    <div class="card">
+      <div class="section-title">NPS Contributions</div>
+      <label>Your Annual NPS Contribution (₹) — 80CCD(1) + 80CCD(1B)</label>
+      <input type="number" id="employee-nps" value="150000" oninput="calc()">
+      <small style="color:#9ca3af;font-size:.77rem">Max deduction under 80CCD(1): 10% of Basic Salary (or 20% of gross for self-employed). Extra ₹50,000 under 80CCD(1B).</small>
+      <label style="margin-top:.75rem">Employer Annual NPS Contribution (₹) — 80CCD(2)</label>
+      <input type="number" id="employer-nps" value="96000" oninput="calc()">
+      <small style="color:#9ca3af;font-size:.77rem">Allowed in both regimes. Max 10% of Basic+DA (govt: 14%).</small>
+      <label style="margin-top:.75rem">Basic Salary + DA (₹ per year)</label>
+      <input type="number" id="basic" value="600000" oninput="calc()">
+    </div>
+  </div>
+
+  <div class="result-hero">
+    <div style="font-size:.85rem;opacity:.7;margin-bottom:.4rem">Total NPS Tax Deduction This Year</div>
+    <div style="font-size:2.2rem;font-weight:900" id="total-deduction">₹—</div>
+    <div class="hero-grid">
+      <div class="hero-stat"><div class="v" id="tax-saved">—</div><div class="l">Tax Saved</div></div>
+      <div class="hero-stat"><div class="v" id="effective-cost">—</div><div class="l">Effective Cost of ₹1L NPS</div></div>
+      <div class="hero-stat"><div class="v" id="corpus">—</div><div class="l">Estimated Corpus at 60</div></div>
+      <div class="hero-stat"><div class="v" id="monthly-pension">—</div><div class="l">Est. Monthly Pension</div></div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="section-title">📋 Deduction Breakdown</div>
+    <div id="deduction-breakdown"></div>
+    <div class="tax-saving-box" id="tax-saving-info"></div>
+  </div>
+
+  <div class="card" style="font-size:.85rem;color:#78350f;line-height:1.7">
+    <div class="section-title">ℹ️ NPS Tax Rules</div>
+    <ul style="padding-left:1.2rem;display:flex;flex-direction:column;gap:.35rem">
+      <li><b>80CCD(1):</b> Employee contribution up to 10% of Basic+DA; counts within ₹1.5L 80C limit</li>
+      <li><b>80CCD(1B):</b> Additional ₹50,000 over and above 80C limit — exclusive to NPS</li>
+      <li><b>80CCD(2):</b> Employer contribution up to 10% of Basic+DA — allowed in <b>both regimes</b></li>
+      <li><b>At maturity (60):</b> 60% lump sum is <b>tax-free</b>; 40% must be used for annuity (pension), taxable as income</li>
+      <li><b>Partial withdrawal:</b> Allowed after 3 years for specific purposes, 25% tax-free</li>
+    </ul>
+  </div>
+</main>
+<footer><p>NPS Calculator by <a href="https://nxtcraft.github.io/taxcalc/" style="color:#d97706">NxtCraft TaxCalc</a></p></footer>
+
+<script>
+function fmt(n){ return '₹'+Math.round(n).toLocaleString('en-IN'); }
+
+function marginalRate(income, regime) {
+  if (regime === 'new') {
+    if (income <= 700000) return 0;
+    if (income <= 1000000) return 10;
+    if (income <= 1200000) return 15;
+    if (income <= 1500000) return 20;
+    return 30;
+  } else {
+    if (income <= 500000) return 0;
+    if (income <= 1000000) return 20;
+    return 30;
+  }
+}
+
+function calc() {
+  const income = +document.getElementById('income').value || 0;
+  const regime = document.getElementById('regime').value;
+  const age = +document.getElementById('age').value || 30;
+  const retRate = +document.getElementById('ret-val').value || 10;
+  const empNPS = +document.getElementById('employee-nps').value || 0;
+  const emplNPS = +document.getElementById('employer-nps').value || 0;
+  const basic = +document.getElementById('basic').value || 0;
+
+  // 80CCD(1): employee contribution capped at 10% of basic
+  const maxCcd1 = basic * 0.1;
+  const ccd1 = Math.min(empNPS, maxCcd1, 150000); // also within 1.5L 80C
+
+  // 80CCD(1B): extra ₹50,000 (only in old regime; for new regime depends — allowed for both actually)
+  const ccd1b_extra = Math.min(Math.max(0, empNPS - ccd1), 50000);
+
+  // 80CCD(2): employer NPS (10% basic for private, 14% for govt)
+  const maxCcd2 = basic * 0.1;
+  const ccd2 = Math.min(emplNPS, maxCcd2);
+
+  const totalDeduction = ccd1 + ccd1b_extra + ccd2;
+  document.getElementById('total-deduction').textContent = fmt(totalDeduction);
+
+  const mr = marginalRate(income, regime);
+  const taxSaved = Math.round(totalDeduction * (mr / 100) * 1.04); // incl 4% cess
+  document.getElementById('tax-saved').textContent = fmt(taxSaved);
+
+  const effCost = empNPS > 0 ? Math.round(100000 * (1 - taxSaved / Math.max(empNPS,1))) : 100000;
+  document.getElementById('effective-cost').textContent = fmt(effCost);
+
+  // Corpus calculation
+  const yearsToRetire = Math.max(0, 60 - age);
+  const annualContrib = empNPS + emplNPS;
+  const r = retRate / 100;
+  const corpus = annualContrib > 0 && r > 0
+    ? annualContrib * (Math.pow(1+r, yearsToRetire) - 1) / r
+    : annualContrib * yearsToRetire;
+  document.getElementById('corpus').textContent = fmt(corpus);
+
+  // 40% annuity → assume 6% annuity rate → monthly pension
+  const annuityCorpus = corpus * 0.4;
+  const monthlyPension = Math.round(annuityCorpus * 0.06 / 12);
+  document.getElementById('monthly-pension').textContent = fmt(monthlyPension) + '/mo';
+
+  document.getElementById('deduction-breakdown').innerHTML = [
+    ['80CCD(1) — Your NPS (within 80C)', fmt(ccd1), 'Max: 10% of Basic or ₹1.5L'],
+    ['80CCD(1B) — Extra NPS Deduction', fmt(ccd1b_extra), 'Max: ₹50,000 (over 80C limit)'],
+    ['80CCD(2) — Employer NPS', fmt(ccd2), 'Max: 10% of Basic+DA'],
+  ].map(([k,v,l])=>`<div class="deduction-row"><span>${k}<br><span class="limit">${l}</span></span><span class="amt">${v}</span></div>`).join('');
+
+  document.getElementById('tax-saving-info').innerHTML =
+    `💡 At your marginal rate of <b>${mr}%</b>: investing ₹1 lakh in NPS effectively costs you only <b>${fmt(effCost)}</b> after tax savings of <b>${fmt(Math.round(100000 * mr/100 * 1.04))}</b>.` +
+    (regime === 'new' ? ' Note: 80CCD(1B) ₹50,000 benefit is NOT available under New Regime unless employer NPS is involved.' : '');
+}
+calc();
+</script>
+</body>
+</html>
