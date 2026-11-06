@@ -154,9 +154,8 @@
       </div>
 
       <div id="verdict-box" style="background:#f0fdf4; border:1.5px solid #bbf7d0; border-radius:12px; padding:14px; margin-bottom:14px; font-size:14px; color:#14532d; font-weight:700; text-align:center;"></div>
-      <div id="share-row" style="display:none; gap:8px; margin-bottom:14px; flex-wrap:wrap;">
-        <button onclick="copyTaxResult()" style="flex:1; padding:10px; background:#eef2ff; color:#4338ca; border:1.5px solid #c7d2fe; border-radius:10px; font-size:13px; font-weight:700; cursor:pointer;">📋 Copy Result</button>
-        <a id="share-wa" href="#" target="_blank" style="flex:1; padding:10px; background:#dcfce7; color:#166534; border:1.5px solid #86efac; border-radius:10px; font-size:13px; font-weight:700; text-decoration:none; text-align:center;">📲 Share on WhatsApp</a>
+      <div id="share-row" style="display:none; margin-bottom:14px;">
+        <button onclick="copyTaxResult()" style="width:100%; padding:10px; background:#eef2ff; color:#4338ca; border:1.5px solid #c7d2fe; border-radius:10px; font-size:13px; font-weight:700; cursor:pointer;">📋 Copy Result</button>
       </div>
 
       <!-- MONTHLY TAKE-HOME -->
@@ -362,18 +361,16 @@ function calculate() {
 
   // Show share row
   const shareRow = document.getElementById('share-row');
-  shareRow.style.display = 'flex';
+  shareRow.style.display = 'block';
   const gross = parseFloat(document.getElementById('gross').value) || 0;
   const nt = lastNew.totalTax, ot = lastOld.totalTax;
   const winner = nt < ot ? 'New' : (ot < nt ? 'Old' : 'Both');
-  const msg = `My Income Tax FY 2025-26 (via TaxCalc):\nGross Income: ₹${Math.round(gross).toLocaleString('en-IN')}\nNew Regime Tax: ₹${Math.round(nt).toLocaleString('en-IN')}\nOld Regime Tax: ₹${Math.round(ot).toLocaleString('en-IN')}\n${winner !== 'Both' ? winner+' Regime is better for me!' : 'Both regimes are equal!'}\nCalculate yours free: https://nxtcraft.github.io/taxcalc/`;
-  document.getElementById('share-wa').href = 'https://wa.me/?text=' + encodeURIComponent(msg);
-  document.getElementById('share-wa')._msg = msg;
+  shareRow._msg = `My Income Tax FY 2025-26 (via TaxCalc):\nGross Income: ₹${Math.round(gross).toLocaleString('en-IN')}\nNew Regime Tax: ₹${Math.round(nt).toLocaleString('en-IN')}\nOld Regime Tax: ₹${Math.round(ot).toLocaleString('en-IN')}\n${winner !== 'Both' ? winner+' Regime is better for me!' : 'Both regimes are equal!'}\nCalculate yours free: https://nxtcraft.github.io/taxcalc/`;
 }
 
 function copyTaxResult() {
-  const wa = document.getElementById('share-wa');
-  navigator.clipboard.writeText(wa._msg || '').then(() => {
+  const msg = document.getElementById('share-row')._msg || '';
+  navigator.clipboard.writeText(msg).then(() => {
     const btn = document.querySelector('[onclick="copyTaxResult()"]');
     const orig = btn.textContent; btn.textContent = '✅ Copied!';
     setTimeout(() => btn.textContent = orig, 2000);
