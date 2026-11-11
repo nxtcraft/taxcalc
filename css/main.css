@@ -79,3 +79,24 @@ summary { font-weight: 700; font-size: 14px; cursor: pointer; }
 details p { font-size: 13px; color: #78350f; margin-top: 8px; line-height: 1.6; }
 footer { text-align: center; padding: 20px; font-size: 12px; color: var(--muted); }
 footer a { color: var(--accent); text-decoration: none; }
+
+/* ── DARK MODE ── */
+[data-theme="dark"] {
+  --bg: #111827; --surface: #1f2937; --surface2: #111827;
+  --border: #374151; --accent: #fbbf24; --accent2: #f59e0b;
+  --accent-light: #1f2937; --text: #f9fafb; --muted: #9ca3af; --label: #d1d5db;
+}
+[data-theme="dark"] .regime-card.new-regime { background: #1e1b4b!important; border-color: #3730a3!important; }
+[data-theme="dark"] .regime-card.old-regime { background: #422006!important; border-color: #78350f!important; }
+[data-theme="dark"] .regime-card.new-regime .regime-label { color: #a5b4fc; }
+[data-theme="dark"] .regime-card.old-regime .regime-label { color: #fde68a; }
+[data-theme="dark"] .breakdown tr:nth-child(even) td { background: #1f2937!important; }
+[data-theme="dark"] .breakdown .total-row td { background: #374151!important; }
+[data-theme="dark"] .slab-table.new th { background: #1e1b4b; color: #a5b4fc; }
+[data-theme="dark"] .slab-table.old th { background: #422006; color: #fde68a; }
+[data-theme="dark"] details p { color: #9ca3af; }
+[data-theme="dark"] .seo p, [data-theme="dark"] .seo li { color: #d1d5db; }
+[data-theme="dark"] .field input:focus, [data-theme="dark"] .field select:focus { background: #111827; }
+[data-theme="dark"] .topbar { background: #b45309!important; }
+[data-theme="dark"] .main-container { background: #111827; }
+[data-theme="dark"] .page-title { color: #fbbf24; }
