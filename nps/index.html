@@ -63,7 +63,7 @@ footer{text-align:center;padding:1.5rem;color:#9ca3af;font-size:.78rem;border-to
 </nav>
 <main>
   <h1>NPS Calculator</h1>
-  <p class="sub">National Pension Scheme tax benefits and maturity corpus estimator. FY 2024-25.</p>
+  <p class="sub">National Pension Scheme tax benefits and maturity corpus estimator. FY 2026-27.</p>
 
   <div class="grid2">
     <div class="card">
@@ -132,10 +132,11 @@ function fmt(n){ return '₹'+Math.round(n).toLocaleString('en-IN'); }
 
 function marginalRate(income, regime) {
   if (regime === 'new') {
-    if (income <= 700000) return 0;
-    if (income <= 1000000) return 10;
-    if (income <= 1200000) return 15;
-    if (income <= 1500000) return 20;
+    // FY 2026-27 new-regime slabs (₹12L rebate)
+    if (income <= 1200000) return 0;
+    if (income <= 1600000) return 15;
+    if (income <= 2000000) return 20;
+    if (income <= 2400000) return 25;
     return 30;
   } else {
     if (income <= 500000) return 0;

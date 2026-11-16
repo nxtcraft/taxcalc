@@ -1,4 +1,4 @@
-// India Income Tax — FY 2024-25 and FY 2025-26
+// India Income Tax — FY 2024-25 to FY 2026-27 (FY 2026-27 slabs unchanged by Budget 2026)
 
 // New regime slabs — FY 2024-25 (Budget 2024)
 const NEW_SLABS_2425 = [
@@ -10,7 +10,7 @@ const NEW_SLABS_2425 = [
   { min: 1500000,  max: Infinity,rate: 30  }
 ];
 
-// New regime slabs — FY 2025-26 (Budget 2025)
+// New regime slabs — FY 2025-26 onward (Budget 2025; unchanged for FY 2026-27)
 const NEW_SLABS_2526 = [
   { min: 0,        max: 400000,  rate: 0   },
   { min: 400000,   max: 800000,  rate: 5   },
@@ -44,75 +44,69 @@ function calcTaxOnSlabs(income, slabs) {
   return { tax, breakdown };
 }
 
-function calcSurcharge(tax, income) {
-  if (income > 50000000) return tax * 0.37;
+const CURRENT_YEAR = '2627';
+const usesBudget2025Rules = year => year >= '2526';
+
+// New regime caps surcharge at 25% (no 37% band) since FY 2023-24.
+function calcSurcharge(tax, income, regime) {
+  if (income > 50000000) return tax * (regime === 'new' ? 0.25 : 0.37);
   if (income > 20000000) return tax * 0.25;
   if (income > 10000000) return tax * 0.15;
   if (income > 5000000)  return tax * 0.10;
   return 0;
 }
 
-function calcNew(grossSalary, employerNPS, year) {
-  employerNPS = employerNPS || 0;
-  year = year || '2425';
-
-  const stdDed = 75000;
-  const taxableIncome = Math.max(0, grossSalary - stdDed - employerNPS);
-
-  const slabs = year === '2526' ? NEW_SLABS_2526 : NEW_SLABS_2425;
+// Tax on already-computed taxable income (after deductions). Single source of truth
+// for slabs, 87A rebate, marginal relief, surcharge and cess across TaxCalc pages.
+function taxOnTaxable(taxableIncome, regime, year) {
+  year = year || CURRENT_YEAR;
+  taxableIncome = Math.max(0, taxableIncome);
+  const slabs = regime === 'old' ? OLD_SLABS : usesBudget2025Rules(year) ? NEW_SLABS_2526 : NEW_SLABS_2425;
   let { tax, breakdown } = calcTaxOnSlabs(taxableIncome, slabs);
+  let rebate = 0, marginalRelief = 0;
 
-  let rebate = 0;
-  let marginalRelief = 0;
-
-  if (year === '2526') {
-    // FY 2025-26: 87A rebate ₹60,000 for taxable income ≤ ₹12,00,000
+  if (regime === 'old') {
+    // Section 87A: taxable income ≤ ₹5L → rebate up to ₹12,500
+    if (taxableIncome <= 500000) rebate = Math.min(tax, 12500);
+    tax -= rebate;
+  } else if (usesBudget2025Rules(year)) {
+    // FY 2025-26 onward: 87A rebate ₹60,000 for taxable income ≤ ₹12L
     if (taxableIncome <= 1200000) {
       rebate = Math.min(tax, 60000);
-      tax = Math.max(0, tax - rebate);
-    } else {
-      // Marginal relief: tax must not exceed (taxableIncome − 12L)
-      const excess = taxableIncome - 1200000;
-      if (tax > excess) {
-        marginalRelief = tax - excess;
-        tax = excess;
-      }
+      tax -= rebate;
+    } else if (tax > taxableIncome - 1200000) {
+      // Marginal relief: tax must not exceed the income above ₹12L
+      marginalRelief = tax - (taxableIncome - 1200000);
+      tax -= marginalRelief;
     }
-  } else {
-    // FY 2024-25: 87A rebate ₹25,000 for taxable income ≤ ₹7,00,000
-    if (taxableIncome <= 700000) {
-      rebate = Math.min(tax, 25000);
-      tax = Math.max(0, tax - rebate);
-    }
+  } else if (taxableIncome <= 700000) {
+    // FY 2024-25: 87A rebate ₹25,000 for taxable income ≤ ₹7L
+    rebate = Math.min(tax, 25000);
+    tax -= rebate;
   }
 
-  const surcharge = calcSurcharge(tax, taxableIncome);
+  const surcharge = calcSurcharge(tax, taxableIncome, regime === 'old' ? 'old' : 'new');
   const cess = (tax + surcharge) * 0.04;
-  const totalTax = tax + surcharge + cess;
-  return { taxableIncome, stdDed, employerNPS, tax, rebate, marginalRelief, surcharge, cess, totalTax, breakdown };
+  return { tax, rebate, marginalRelief, surcharge, cess, totalTax: tax + surcharge + cess, breakdown };
+}
+
+function calcNew(grossSalary, employerNPS, year) {
+  employerNPS = employerNPS || 0;
+  const stdDed = 75000;
+  const taxableIncome = Math.max(0, grossSalary - stdDed - employerNPS);
+  return { taxableIncome, stdDed, employerNPS, ...taxOnTaxable(taxableIncome, 'new', year) };
 }
 
 function calcOld(grossSalary, deductions, year) {
-  year = year || '2425';
   const stdDed = 50000;
   const total80C  = Math.min(deductions.d80C || 0, 150000);
   const total80D  = Math.min(deductions.d80D || 0, 75000);
   const hraEx     = deductions.hra || 0;
   const otherDed  = deductions.other || 0;
   const employerNPS = deductions.employerNPS || 0;
-
   const totalDed = stdDed + total80C + total80D + hraEx + otherDed + employerNPS;
   const taxableIncome = Math.max(0, grossSalary - totalDed);
-  let { tax, breakdown } = calcTaxOnSlabs(taxableIncome, OLD_SLABS);
-
-  // Section 87A rebate: taxable income ≤ ₹5L → rebate up to ₹12,500 (old regime, both years)
-  const rebate = taxableIncome <= 500000 ? Math.min(tax, 12500) : 0;
-  tax = Math.max(0, tax - rebate);
-
-  const surcharge = calcSurcharge(tax, taxableIncome);
-  const cess = (tax + surcharge) * 0.04;
-  const totalTax = tax + surcharge + cess;
-  return { taxableIncome, stdDed, total80C, total80D, hraEx, otherDed, employerNPS, totalDed, tax, rebate, surcharge, cess, totalTax, breakdown };
+  return { taxableIncome, stdDed, total80C, total80D, hraEx, otherDed, employerNPS, totalDed, ...taxOnTaxable(taxableIncome, 'old', year) };
 }
 
 function fmt(n) {
