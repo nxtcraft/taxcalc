@@ -85,7 +85,16 @@ function taxOnTaxable(taxableIncome, regime, year) {
     tax -= rebate;
   }
 
-  const surcharge = calcSurcharge(tax, taxableIncome, regime === 'old' ? 'old' : 'new');
+  const reg = regime === 'old' ? 'old' : 'new';
+  let surcharge = calcSurcharge(tax, taxableIncome, reg);
+  // Marginal relief on surcharge: tax + surcharge may exceed the tax + surcharge at the
+  // threshold just crossed (₹50L/₹1Cr/₹2Cr/₹5Cr) by no more than the income above it.
+  const threshold = [50000000, 20000000, 10000000, 5000000].find(t => taxableIncome > t);
+  if (threshold && surcharge > 0) {
+    const taxAtT = calcTaxOnSlabs(threshold, slabs).tax;
+    const cap = taxAtT + calcSurcharge(taxAtT, threshold, reg) + (taxableIncome - threshold);
+    if (tax + surcharge > cap) surcharge = Math.max(0, cap - tax);
+  }
   const cess = (tax + surcharge) * 0.04;
   return { tax, rebate, marginalRelief, surcharge, cess, totalTax: tax + surcharge + cess, breakdown };
 }
