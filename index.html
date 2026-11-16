@@ -73,6 +73,7 @@
       <a href="capital-gains/">📈 Capital Gains</a>
       <a href="advance-tax/">📅 Advance Tax</a>
       <a href="nps/">🏦 NPS</a>
+      <a href="salary/">📊 Tax by Salary</a>
       <a href="guide/">📖 Guide</a>
     </nav>
   </div>
@@ -247,11 +248,11 @@
       <li>Section 80C deduction up to ₹1.5 lakh (PF, ELSS, PPF, LIC, home loan principal)</li>
       <li>Section 80D up to ₹25,000 (health insurance) + ₹25,000 for parents</li>
       <li>HRA exemption for rent-paying employees</li>
-      <li>Better if total deductions exceed ₹3.75 lakh (approx)</li>
+      <li>Better only with large deductions (≈₹5.5–8 lakh above ₹15L salary)</li>
     </ul>
 
     <h3>Which regime should you choose?</h3>
-    <p>A rough guide: if your 80C + 80D + HRA + other deductions total more than ₹3.75 lakh, the old regime will likely save more tax. Below that, the new regime is usually better. Use the calculator above for your exact numbers.</p>
+    <p>A rough guide for FY 2026-27: up to ₹12.75 lakh salary the new regime is always at least as good (zero tax). Above that, the old regime only wins if your 80C + 80D + HRA + home loan + NPS deductions exceed roughly ₹5.5 lakh (at ₹15L) to ₹8 lakh (₹25L+). <a href="salary/">See tax for every salary →</a> Use the calculator above for your exact numbers.</p>
 
     <h3>Frequently Asked Questions</h3>
     <details>
@@ -465,6 +466,7 @@ onYearChange();
 </div>
 
 <div style="text-align:center;padding:14px 20px;font-size:13px;color:#94a3b8;border-top:1px solid rgba(0,0,0,0.08);margin-top:16px"><a href="https://nxtcraft.github.io/" style="color:#6366f1;text-decoration:none;font-weight:600">← All Tools</a> &nbsp;·&nbsp; <a href="https://buymeacoffee.com/nxtcraft" target="_blank" rel="noopener" style="background:#FFDD00;color:#000;padding:2px 10px;border-radius:6px;font-weight:700;text-decoration:none;font-size:12px">☕ Support</a> &nbsp;·&nbsp; <a href="mailto:pradeepkesharwani4@gmail.com?subject=Feedback" style="color:#94a3b8;text-decoration:none">📧 Feedback</a></div>
+<script>(()=>{const q=new URLSearchParams(location.search),g=+q.get("gross");if(g>0){document.getElementById("gross").value=g;if(typeof calculate==="function")calculate();}})();</script>
 <script src="/assets/nc-theme.js" defer></script>
 </body>
 </html>
